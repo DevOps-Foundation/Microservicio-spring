@@ -1,6 +1,6 @@
 node {
   stage('Build'){
     checkout scm
-   sh "hola"
+     sh "./gradlew build"
   }
 }

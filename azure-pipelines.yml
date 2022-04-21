@@ -9,6 +9,6 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    chmod 77 gradlew
+    chmod 777 gradlew
     ./gradlew build
   displayName: 'Build'

@@ -10,4 +10,3 @@ jobs:
   displayName: 'Build'
   steps:
   - script: chmod 777 gradlew; ./gradlew build
-  displayName: 'Build Codigo'

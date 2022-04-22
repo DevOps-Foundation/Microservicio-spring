@@ -7,9 +7,7 @@ pool:
   
 jobs:
 - job: build
-  displayName: Build
+  displayName: 'Build'
   steps:
-  - script: |
-    chmod 777 gradlew
-    ./gradlew build
+  - script: chmod 777 gradlew; ./gradlew build
   displayName: 'Build Codigo'

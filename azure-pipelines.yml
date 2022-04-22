@@ -4,12 +4,12 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  
+jobs:
+- job: build
+  displayName: Build
 
 - script: |
     chmod 777 gradlew
     ./gradlew build
-  displayName: 'Build'
+  displayName: 'Build Codigo'

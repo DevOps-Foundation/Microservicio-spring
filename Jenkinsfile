@@ -1,11 +1,19 @@
 node {
-  stage('Build'){
+
+  stage ('Clone'){
+    figlet 'SOURCE CONTROL MANAGEMENT'
     checkout scm
+  }
+
+  stage('Build'){
+    figlet 'BUILD'
     sh "chmod 777 gradlew"
-     sh "./gradlew build"
+    sh "./gradlew clean build"
+    archiveArtifacts artifacts: "build/libs/testing-web-*.jar"
   }
   
   stage('Test'){
-  sh "./gradlew clean test"
+    figlet 'TEST UNITARIOS'
+    sh "./gradlew clean test"
   }
 }

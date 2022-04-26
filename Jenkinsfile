@@ -16,4 +16,12 @@ node {
     figlet 'TEST UNITARIOS'
     sh "./gradlew clean test"
   }
+
+  stage ('Code Review'){
+    sh "Ejecutando .."
+  }
+
+  stage ('Image Build'){
+    sh "docker build "
+  }
 }

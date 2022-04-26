@@ -14,7 +14,7 @@ public class GreetingController {
 		this.service = service;
 	}
 
-	@RequestMapping("/greeting")
+	@RequestMapping(value = "/greeting", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String greeting() {
 		return service.greet();
 	}

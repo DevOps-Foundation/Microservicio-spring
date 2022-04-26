@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'org.sonarqube' version '3.3'
 }
 
 group = 'com.example'
@@ -15,6 +16,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "DevOps-Foundation_Microservicio-spring"
+    property "sonar.organization", "devops-foundation"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
 
 test {

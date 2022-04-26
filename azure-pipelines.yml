@@ -21,8 +21,6 @@ jobs:
       SonarCloud: 'Sonarcloud'
       organization: 'Devops-Foundation'
       projectKey: 'DevOps-Foundation_Microservicio-spring'
-      projectName: 'testing-web'
-      scannerMode: 'Other'
     displayName: 'Preparing Sonarqube Environment'
   - task: Gradle@3
     inputs:

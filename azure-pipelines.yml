@@ -9,4 +9,27 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - script: chmod 777 gradlew; ./gradlew build
+  - script: chmod 777 gradlew;
+
+- job: sonar
+  workspace:
+    clean: all
+  displayName:  Sonar Cloud
+  steps:
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'Sonarcloud'
+      organization: 'devops-foundation'
+      projectKey: 'DevOps-Foundation_Microservicio-spring'
+      projectName: 'testing-web'
+      scannerMode: 'Other'
+    displayName: 'Preparing Sonarqube Environment'
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: "$(gradleTasks.SONAR_GRADLE_TASKS) -Ppaccesstoken=$(System.AccessToken)"
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: true
+      sqGradlePluginVersionChoice: 'specify'
+      sonarQubeGradlePluginVersion: '3.3'
+    displayName: 'Analyze current Branch'

@@ -15,10 +15,6 @@ node {
   }
 
   stage ('Code Review'){
-    sh "Ejecutando .."
-  }
-
-  stage ('Image Build'){
-    sh "docker build "
+    sh "./gradlew sonarqube"
   }
 }

@@ -15,6 +15,6 @@ node {
   }
 
   stage ('Code Review'){
-    sh "./gradlew sonarqube"
+    sh "./gradlew sonarqube -Dsonar.login=19ff6d5acb1b34e299b77cb7f2307e1615d6f1c5 -Dsonar.branch.name=feature-deploy"
   }
 }

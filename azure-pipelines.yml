@@ -19,7 +19,7 @@ jobs:
   - task: SonarCloudPrepare@1
     inputs:
       SonarCloud: 'Sonarcloud'
-      organization: 'devops-foundation'
+      organization: 'Devops-Foundation'
       projectKey: 'DevOps-Foundation_Microservicio-spring'
       projectName: 'testing-web'
       scannerMode: 'Other'

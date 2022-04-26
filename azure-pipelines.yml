@@ -27,7 +27,7 @@ jobs:
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
-      tasks: "$(gradleTasks.SONAR_GRADLE_TASKS) -Ppaccesstoken=$(System.AccessToken)"
+      tasks: "sonarqube"
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: true
       sqGradlePluginVersionChoice: 'specify'

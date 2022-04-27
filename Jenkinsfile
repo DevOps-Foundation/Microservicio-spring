@@ -15,6 +15,6 @@ node {
   }
 
   stage ('Code Review'){
-    sh "./gradlew sonarqube -Dsonar.login=${SONAR_TOKEN} -Dsonar.branch.name=feature-deploy"
+    sh "set +x; ./gradlew sonarqube -Dsonar.login=${SONAR_TOKEN} -Dsonar.branch.name=feature-deploy"
   }
 }

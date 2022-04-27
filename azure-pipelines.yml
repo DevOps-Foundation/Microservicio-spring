@@ -9,7 +9,15 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - script: chmod 777 gradlew; ./gradlew clean build
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: 'build'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
 
 - job: sonar
   workspace:
@@ -40,7 +48,7 @@ jobs:
     displayName: 'Publish Analysis Results'
 
 - job: buildimage
-  displayName:  Construccion Imagen
+  displayName:  Build Image
   dependsOn: build
   steps:
   - task: Docker@2
@@ -49,5 +57,3 @@ jobs:
       repository: 'microservicio-spring'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
-
-

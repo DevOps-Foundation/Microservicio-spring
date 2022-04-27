@@ -9,7 +9,7 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - script: chmod 777 gradlew; ./gradlew test
+  - script: chmod 777 gradlew; ./gradlew clean build
 
 - job: sonar
   workspace:
@@ -41,6 +41,7 @@ jobs:
 
 - job: buildimage
   displayName:  Construccion Imagen
+  dependsOn: build
   steps:
   - task: Docker@2
     inputs:

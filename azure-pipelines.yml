@@ -9,12 +9,12 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - script: chmod 777 gradlew;
+  - script: chmod 777 gradlew; ./gradlew test
 
 - job: sonar
   workspace:
     clean: all
-  displayName:  Sonar Cloud
+  displayName:  Code Review
   steps:
   - task: SonarCloudPrepare@1
     inputs:
@@ -38,3 +38,15 @@ jobs:
     inputs:
       pollingTimeoutSec: '300'
     displayName: 'Publish Analysis Results'
+
+- job: buildimage
+  displayName:  Construccion Imagen
+  steps:
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker-registry'
+      repository: 'microservicio-spring'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+
+

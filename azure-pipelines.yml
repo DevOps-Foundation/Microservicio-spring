@@ -19,6 +19,19 @@ jobs:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
 
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: |
+        **/build/libs/testing-*.jar
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: appJar
+      publishLocation: 'Container'
+
 - job: sonar
   workspace:
     clean: all
@@ -51,6 +64,12 @@ jobs:
   displayName:  Build Image
   dependsOn: build
   steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appJar'
+      downloadPath: '$(Pipeline.Workspace)/build/libs'
   - task: Docker@2
     inputs:
       containerRegistry: 'Docker-registry'

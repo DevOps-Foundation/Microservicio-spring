@@ -71,7 +71,7 @@ jobs:
       artifactName: 'appJar'
       downloadPath: '$(Pipeline.Workspace)'
 
-  - script: "mkdir -p build/libs; ls -ltr $(Pipeline.Workspace)/appJar/build/libs; mv $(Pipeline.Workspace)/appJar/build/libs/ build/; chmod -R 555 build/libs; ls -ltra"  
+  - script: "mkdir -p build/libs; mv $(Pipeline.Workspace)/appJar/build/libs/ build/; chmod -R 555 build/libs"  
 
   
   - task: Docker@2
@@ -80,7 +80,9 @@ jobs:
       command: 'login'
   - task: Docker@2
     inputs:
-      containerRegistry: 'Docker-registry'
-      repository: 'microservicio-spring'
+      repository: 'clagosu/microservicio-spring'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
+           
+
+    

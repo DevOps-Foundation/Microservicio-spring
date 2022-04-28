@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: ms-spring
-        image: clagosu/microservicio-spring:latest
+        image: clagosu/microservicio-spring
         ports:
         - containerPort: 8080

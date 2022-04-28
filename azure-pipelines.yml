@@ -70,6 +70,9 @@ jobs:
       downloadType: 'single'
       artifactName: 'appJar'
       downloadPath: '$(Pipeline.Workspace)/build/libs'
+
+  - script: "mv $(Pipeline.Workspace)/build/libs ./build/libs"  
+
   - task: Docker@2
     inputs:
       containerRegistry: 'Docker-registry'

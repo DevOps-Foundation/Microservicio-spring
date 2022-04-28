@@ -129,9 +129,9 @@ jobs:
   - task: AzureCLI@2
     inputs:
       azureSubscription: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-      scriptType: 'ps'
+      scriptType: 'batch'
       scriptLocation: 'inlineScript'
-      inlineScript: 'az aks check-acr'
+      inlineScript: 'call az aks check-acr'
       arguments: '--name aks-getting-started --resource-group aks-getting-started --acr hub.docker.com'
   - task: Kubernetes@1
     inputs:

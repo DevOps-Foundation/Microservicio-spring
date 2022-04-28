@@ -3,19 +3,9 @@ kind: Pod
 metadata:
   name: ms-spring
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: ms-spring
-  template:
-    metadata:
-      labels:
-        app: ms-spring
-    spec:
-      containers:
-      - name: ms-spring
-        image: clagosu/microservicio-spring
-        imagePullSecrets:
-          - name: az-k8s-secret
-        ports:
-        - containerPort: 8080
+  containers:
+    - name: ms-spring
+      image: clagosu/microservicio-spring
+      imagePullSecrets: az-k8s-secret
+      ports:
+       - containerPort: 8080

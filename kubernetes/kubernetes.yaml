@@ -1,10 +1,50 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: ms-spring
-spec:
-  containers:
-    - name: ms-spring
-      image: clagosu/microservicio-spring:97
-      ports:
-       - containerPort: 8080
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: default
+  spec:
+    finalizers:
+      - kubernetes
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: microservicio-spring
+    namespace: default
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: microservicio-spring
+    template:
+      metadata:
+        labels:
+          app: microservicio-spring
+      spec:
+        nodeSelector:
+          kubernetes.io/os: linux
+        containers:
+          - name: microservicio-spring
+            image: clagosu/microservicio-spring:98
+            ports:
+              - containerPort: 8082
+            resources:
+              requests:
+                cpu: '1'
+                memory: 128M
+              limits:
+                cpu: '2'
+                memory: 128M
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: microservicio-spring-service
+    namespace: default
+  spec:
+    type: LoadBalancer
+    ports:
+      - targetPort: 8082
+        name: port8082
+        port: 8082
+        protocol: TCP
+    selector:
+      app: microservicio-spring

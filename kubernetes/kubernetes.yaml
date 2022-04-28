@@ -1,20 +1,20 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-   name: default
-spec:
-  finalizers:
-     - kubernetes
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: microservicio-spring
-  namespace: default
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: default
   spec:
-   replicas: 1
-   selector:
-     matchLabels:
-       app: microservicio-spring
+    finalizers:
+      - kubernetes
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: microservicio-spring
+    namespace: default
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: microservicio-spring
     template:
       metadata:
         labels:
@@ -34,17 +34,17 @@ metadata:
               limits:
                 cpu: '2'
                 memory: 128M
-apiVersion: v1
-kind: Service
-metadata:
-   name: microservicio-spring-service
-   namespace: default
-spec:
-  type: LoadBalancer
-   ports:
-    - targetPort: 8082
-      name: port8082
-      port: 8082
-      protocol: TCP
-   selector:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: microservicio-spring-service
+    namespace: default
+  spec:
+    type: LoadBalancer
+    ports:
+      - targetPort: 8082
+        name: port8082
+        port: 8082
+        protocol: TCP
+    selector:
       app: microservicio-spring

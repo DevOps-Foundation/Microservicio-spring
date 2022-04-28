@@ -9,16 +9,15 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - script: ping -c 10 10.244.0.24;
-
   - task: Kubernetes@1
     inputs:
       connectionType: 'Azure Resource Manager'
       azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
-      useConfigurationFile: true
-      configurationType: 'inline'
-      inline: 'kubectl describe pod ms-spring'
+      command: 'expose'
+      arguments: 'deployment microservicio-spring --type=LoadBalancer --name=microservicio-spring-service'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
+
+

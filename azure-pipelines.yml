@@ -15,8 +15,8 @@ jobs:
       azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
-      command: 'expose'
-      arguments: 'deployment microservicio-spring --type=LoadBalancer --name=microservicio-spring-service'
+      command: 'get'
+      arguments: 'deployments hello-world'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
 

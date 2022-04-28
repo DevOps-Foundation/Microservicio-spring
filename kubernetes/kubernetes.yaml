@@ -15,5 +15,7 @@ spec:
       containers:
       - name: ms-spring
         image: clagosu/microservicio-spring
+        imagePullSecrets:
+          - name: az-k8s-secret
         ports:
         - containerPort: 8080

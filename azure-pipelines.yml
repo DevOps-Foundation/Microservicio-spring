@@ -84,7 +84,8 @@ jobs:
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
            
-
+- job: Deploy
+  steps:
   - task: Kubernetes@1
     inputs:
       connectionType: 'Azure Resource Manager'
@@ -92,6 +93,7 @@ jobs:
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
       command: 'login'
+    displayName:  Autenticacion cluster kubernetes
   #- task: Kubernetes@1
   #  inputs:
   #    connectionType: 'Azure Resource Manager'
@@ -121,6 +123,7 @@ jobs:
       secretName: 'az-k8s-secret'
       secretType: 'dockerRegistry'
       dockerRegistryEndpoint: 'Docker-registry'
+    displayName:  Integracion k8s y docker registry
   - task: Kubernetes@1
     inputs:
       connectionType: 'Azure Resource Manager'
@@ -131,4 +134,5 @@ jobs:
       arguments: '-f kubernetes/kubernetes.yaml'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
+    displayName:  Despliegue en cluster
 

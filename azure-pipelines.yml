@@ -91,7 +91,6 @@ jobs:
       azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
-      useClusterAdmin: true
       command: 'login'
   #- task: Kubernetes@1
   #  inputs:
@@ -118,7 +117,7 @@ jobs:
     inputs:
       action: 'createSecret'
       kubernetesServiceConnection: 'Az-k8s'
-      namespace: 'default manifests'
+      namespace: 'default'
       secretName: 'az-k8s-secret'
       secretType: 'dockerRegistry'
       dockerRegistryEndpoint: 'Docker-registry'

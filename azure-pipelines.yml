@@ -71,8 +71,13 @@ jobs:
       artifactName: 'appJar'
       downloadPath: '$(Pipeline.Workspace)'
 
-  - script: "mkdir -p build/libs; ls -ltr $(Pipeline.Workspace)/appJar/build/libs; mv $(Pipeline.Workspace)/appJar/build/libs/ build/; chmod -R 555 build/libs; ls -ltr"  
+  - script: "mkdir -p build/libs; ls -ltr $(Pipeline.Workspace)/appJar/build/libs; mv $(Pipeline.Workspace)/appJar/build/libs/ build/; chmod -R 555 build/libs; ls -ltra"  
 
+  
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker-registry'
+      command: 'login'
   - task: Docker@2
     inputs:
       containerRegistry: 'Docker-registry'

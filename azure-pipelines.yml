@@ -16,7 +16,7 @@ jobs:
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
       command: 'get'
-      arguments: 'deployments hello-world'
+      arguments: 'deployments ms-spring'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
 

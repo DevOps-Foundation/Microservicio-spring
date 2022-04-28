@@ -16,7 +16,7 @@ jobs:
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
       command: 'get'
-      arguments: 'services microservicio-spring-service'
+      arguments: 'replicasets'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
 

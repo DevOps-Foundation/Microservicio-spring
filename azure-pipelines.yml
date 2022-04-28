@@ -167,3 +167,19 @@ jobs:
       jmeterPath: '$(JMeterInstaller.JMeterPath)'
       jmeterVersion: '$(JMeterInstaller.JMeterVersion)'
       outputDir: 'taurus-output'
+
+- job: PerformanceTest
+  dependsOn: Deploy
+  steps:
+  - script: git clone https://github.com/DevOps-Foundation/Selenium.git
+  
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'Selenium/pom.xml'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false

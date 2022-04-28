@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
     - name: ms-spring
-      image: clagosu/microservicio-spring
+      image: clagosu/microservicio-spring:97
       ports:
        - containerPort: 8080

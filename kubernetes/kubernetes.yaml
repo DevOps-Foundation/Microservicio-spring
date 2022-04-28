@@ -13,7 +13,7 @@ spec:
         app: ms-spring
     spec:
       containers:
-      - name: nginx
-        image: clagos/microservicio-spring:latest
+      - name: ms-spring
+        image: clagosu/microservicio-spring:latest
         ports:
         - containerPort: 8080

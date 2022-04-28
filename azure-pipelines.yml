@@ -145,3 +145,22 @@ jobs:
       containerRegistryType: 'Azure Container Registry'
     displayName:  Despliegue en cluster
 
+  - task: JMeterInstaller@0
+    inputs:
+      jmeterVersion: '5.4.2'
+  
+  - task: TaurusInstaller@0
+    inputs:
+      taurusVersion: '1.15.3'
+      pythonCommand: 'python3'
+
+  - task: TaurusRunner@0
+    inputs:
+      taurusConfig: |
+        execution:
+        - scenario:
+              script: jmeter/performance.jmx
+      jmeterHome: '$(JMeterInstaller.JMeterHome)'
+      jmeterPath: '$(JMeterInstaller.JMeterPath)'
+      jmeterVersion: '$(JMeterInstaller.JMeterVersion)'
+      outputDir: 'taurus-output'

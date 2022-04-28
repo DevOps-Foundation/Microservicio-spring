@@ -146,6 +146,7 @@ jobs:
     displayName:  Despliegue en cluster
 
 - job: PerformanceTest
+  dependsOn: Deploy
   steps:
   - task: JMeterInstaller@0
     inputs:

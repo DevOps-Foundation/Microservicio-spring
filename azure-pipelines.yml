@@ -1,6 +1,10 @@
-trigger:
-- main
-- feature-azure-pipelines
+resources:
+  repositories:
+    - repository: configmap-repo-dsr
+      type: github
+      name: DevOps-Foundation/Selenium
+      endpoint: DevOps-Foundation
+      ref: main
 
 pool:
   vmImage: ubuntu-latest
@@ -8,7 +12,10 @@ pool:
 jobs:
 - job: PerformanceTest
   steps:
-  - script: git clone https://github.com/DevOps-Foundation/Selenium.git
+  - script: |
+      git config --global user.name "clagosu"
+      git config --global user.email clagos353@gmail.com
+      git clone https://github.com/DevOps-Foundation/Selenium.git
   
   - task: Maven@3
     inputs:

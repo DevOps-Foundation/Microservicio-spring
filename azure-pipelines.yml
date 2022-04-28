@@ -114,6 +114,14 @@ jobs:
      # arguments: 'service clusterip demo --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml'
      # secretType: 'dockerRegistry'
      # containerRegistryType: 'Azure Container Registry'
+  - task: KubernetesManifest@0
+    inputs:
+      action: 'createSecret'
+      kubernetesServiceConnection: 'Az-k8s'
+      namespace: 'default manifests'
+      secretName: 'az-k8s-secret'
+      secretType: 'dockerRegistry'
+      dockerRegistryEndpoint: 'Docker-registry'
   - task: Kubernetes@1
     inputs:
       connectionType: 'Azure Resource Manager'
@@ -124,3 +132,4 @@ jobs:
       arguments: '-f kubernetes/kubernetes.yaml'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
+

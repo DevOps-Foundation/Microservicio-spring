@@ -13,9 +13,11 @@ jobs:
 - job: PerformanceTest
   steps:
   - script: |
+      git config --global --add url."git@github.com:".insteadOf "https://github.com/"
       git config --global user.name "clagosu"
       git config --global user.email clagos353@gmail.com
-      git clone https://github.com/DevOps-Foundation/Selenium.git
+      ssh-keyscan -t rsa "github.com" >> ~/.ssh/known_hosts
+      git clone git@github.com:DevOps-Foundation/Selenium.git
   
   - task: Maven@3
     inputs:

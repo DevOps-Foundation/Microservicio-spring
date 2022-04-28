@@ -9,7 +9,8 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  
+  - script: ping -c 10 10.244.0.24;
+
   - task: Kubernetes@1
     inputs:
       connectionType: 'Azure Resource Manager'

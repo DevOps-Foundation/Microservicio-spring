@@ -122,8 +122,8 @@ jobs:
       action: 'createSecret'
       kubernetesServiceConnection: 'Az-k8s'
       namespace: 'default'
-      secretName: 'az-k8s-secret'
       secretType: 'dockerRegistry'
+      secretName: 'az-k8s-secret'
       dockerRegistryEndpoint: 'Docker-registry'
     displayName:  Integracion k8s y docker registry
   #- task: AzureCLI@2

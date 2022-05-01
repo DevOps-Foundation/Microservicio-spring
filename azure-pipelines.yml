@@ -120,7 +120,7 @@ jobs:
   - task: KubernetesManifest@0
     inputs:
       action: 'createSecret'
-      kubernetesServiceConnection: 'Az-k8s'
+      kubernetesServiceConnection: 'Azure-k8s'
       namespace: 'default'
       secretType: 'dockerRegistry'
       secretName: 'az-k8s-secret'

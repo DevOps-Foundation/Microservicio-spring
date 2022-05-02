@@ -9,139 +9,27 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - task: Gradle@3
+  - task: HelmInstaller@0
     inputs:
-      gradleWrapperFile: 'gradlew'
-      tasks: 'build'
-      publishJUnitResults: true
-      testResultsFiles: '**/TEST-*.xml'
-      javaHomeOption: 'JDKVersion'
-      sonarQubeRunAnalysis: false
-      spotBugsAnalysis: false
-
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: '$(Build.SourcesDirectory)'
-      contents: |
-        **/build/libs/testing-*.jar
-      targetFolder: '$(Build.ArtifactStagingDirectory)'
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: appJar
-      publishLocation: 'Container'
-
-- job: sonar
-  workspace:
-    clean: all
-  displayName:  Code Review
-  steps:
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'Sonarcloud'
-      organization: 'devops-foundation'
-      projectKey: 'DevOps-Foundation_Microservicio-spring'
-      projectName: 'testing-web'
-    displayName: 'Preparing Sonarqube Environment'
-    
-  - task: Gradle@3
-    inputs:
-      gradleWrapperFile: 'gradlew'
-      tasks: "sonarqube"
-      javaHomeOption: 'JDKVersion'
-      sonarQubeRunAnalysis: true
-      sqGradlePluginVersionChoice: 'specify'
-      sonarQubeGradlePluginVersion: '3.3'
-    displayName: 'Analyze current Branch'
-    
-  - task: SonarCloudPublish@1
-    inputs:
-      pollingTimeoutSec: '300'
-    displayName: 'Publish Analysis Results'
-
-- job: buildimage
-  displayName:  Build Image
-  dependsOn: build
-  steps:
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildType: 'current'
-      downloadType: 'single'
-      artifactName: 'appJar'
-      downloadPath: '$(Pipeline.Workspace)'
-
-  - script: "mkdir -p build/libs; mv $(Pipeline.Workspace)/appJar/build/libs/ build/; chmod -R 555 build/libs"  
-    displayName:  Se mueve jar a carpeta raiz
-
-  
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'Docker-registry'
-      command: 'login'
-  - task: Docker@2
-    inputs:
-      repository: 'clagosu/microservicio-spring'
-      command: 'buildAndPush'
-      Dockerfile: '**/Dockerfile'
-           
-- job: Deploy
-  dependsOn: buildimage
-  steps:
+      helmVersion: '2.14.1'
+      installKubectl: true
   - task: Kubernetes@1
     inputs:
-      connectionType: 'Azure Resource Manager'
-      azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-      azureResourceGroup: 'aks-getting-started'
-      kubernetesCluster: 'aks-getting-started'
-      command: 'login'
-    displayName:  Autenticacion cluster kubernetes
-  #- task: Kubernetes@1
-  #  inputs:
-  #    connectionType: 'Azure Resource Manager'
-  #    azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-  #    azureResourceGroup: 'aks-getting-started'
-  #    kubernetesCluster: 'aks-getting-started'
-  #    command: 'create'
-  #    arguments: 'deployment demo --image=clagosu/microservicio-spring --dry-run -o=yaml > deployment.yaml'
-  #    secretType: 'dockerRegistry'
-  #    containerRegistryType: 'Azure Container Registry'
-    
-  #- task: Kubernetes@1
-   # inputs:
-    #  connectionType: 'Azure Resource Manager'
-     # azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-     # azureResourceGroup: 'aks-getting-started'
-     # kubernetesCluster: 'aks-getting-started'
-     # command: 'create'
-     # arguments: 'service clusterip demo --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml'
-     # secretType: 'dockerRegistry'
-     # containerRegistryType: 'Azure Container Registry'
-  - task: KubernetesManifest@0
-    inputs:
-      action: 'createSecret'
-      kubernetesServiceConnection: 'Az-k8s'
-      namespace: 'default'
-      secretName: 'az-k8s-secret'
-      secretType: 'dockerRegistry'
-      dockerRegistryEndpoint: 'Docker-registry'
-    displayName:  Integracion k8s y docker registry
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: 'az aks check-acr --name aks-getting-started --resource-group aks-getting-started --acr hub.docker.com'
-      
-  - task: Kubernetes@1
-    inputs:
-      connectionType: 'Azure Resource Manager'
-      azureSubscriptionEndpoint: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-      azureResourceGroup: 'aks-getting-started'
-      kubernetesCluster: 'aks-getting-started'
-      command: 'apply'
-      arguments: '-f kubernetes/kubernetes.yaml'
+      connectionType: 'Kubernetes Service Connection'
+      kubernetesServiceEndpoint: 'Azure-k8s'
+      command: 'create'
+      arguments: 'ns monitoring'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
-    displayName:  Despliegue en cluster
+  - task: HelmDeploy@0
+    inputs:
+      connectionType: 'Azure Resource Manager'
+      azureSubscription: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
+      azureResourceGroup: 'aks-getting-started'
+      kubernetesCluster: 'aks-getting-started'
+      namespace: 'monitoring'
+      command: 'install'
+      chartType: 'Name'
+      chartName: 'prometheus-community/kube-prometheus-stack'
+      arguments: '-n monitoring'
 

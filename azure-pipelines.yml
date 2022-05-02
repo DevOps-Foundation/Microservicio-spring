@@ -18,7 +18,7 @@ jobs:
       connectionType: 'Kubernetes Service Connection'
       kubernetesServiceEndpoint: 'Azure-k8s'
       command: 'login'
-  - script: kubectl -n monitoring port-forward kube-prometheus-stack-1651533887-grafana-59559b5478-zvgr2 80:80
+  - script: kubectl port-forward --namespace monitoring svc/prometheus-grafana 8090:80
 
   #- script: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 

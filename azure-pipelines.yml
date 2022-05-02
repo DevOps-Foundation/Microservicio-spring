@@ -13,23 +13,7 @@ jobs:
     inputs:
       helmVersion: '2.14.1'
       installKubectl: true
-  - task: Kubernetes@1
-    inputs:
-      connectionType: 'Kubernetes Service Connection'
-      kubernetesServiceEndpoint: 'Azure-k8s'
-      command: 'create'
-      arguments: 'ns monitoring'
-      secretType: 'dockerRegistry'
-      containerRegistryType: 'Azure Container Registry'
-  - task: HelmDeploy@0
-    inputs:
-      connectionType: 'Azure Resource Manager'
-      azureSubscription: 'azure(9909fced-8203-44b6-af68-11f833a37e60)'
-      azureResourceGroup: 'aks-getting-started'
-      kubernetesCluster: 'aks-getting-started'
-      namespace: 'monitoring'
-      command: 'install'
-      chartType: 'Name'
-      chartName: 'prometheus-community/kube-prometheus-stack'
-      arguments: '-n monitoring'
+
+
+  - script: helm -v
 

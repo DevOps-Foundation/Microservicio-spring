@@ -140,7 +140,7 @@ jobs:
       azureResourceGroup: 'aks-getting-started'
       kubernetesCluster: 'aks-getting-started'
       command: 'apply'
-      arguments: '-f kubernetes/public-scv.yaml'
+      arguments: '-f kubernetes/kubernetes.yaml'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
     displayName:  Despliegue en cluster

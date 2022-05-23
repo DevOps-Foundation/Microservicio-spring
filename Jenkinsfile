@@ -34,7 +34,9 @@ pipeline {
           }
         stage('Build') {
             steps {
-                echo 'Hello world!' 
+                chmod 777 gradlew
+                ./gradlew clean build
+                archiveArtifacts artifacts: "build/libs/testing-web-*.jar"
             }
           }
         stage('Image Build') {

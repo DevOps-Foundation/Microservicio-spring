@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Image Build') {
             steps {
-                echo 'Hello world!' 
+                sh 'docker build Dockerfile'
             }
         }
     }

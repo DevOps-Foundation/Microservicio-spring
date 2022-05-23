@@ -28,7 +28,8 @@ pipeline {
     stages {
         stage('Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/feature-deploy']], extensions: [], userRemoteConfigs: [[credentialsId: 'clagosu', url: 'https://github.com/Devops-Foundation/microservicio-spring.git']]])
+                checkout scm 
+                //checkout([$class: 'GitSCM', branches: [[name: '*/feature-deploy']], extensions: [], userRemoteConfigs: [[credentialsId: 'clagosu', url: 'https://github.com/Devops-Foundation/microservicio-spring.git']]])
             }
         stage('Build') {
             steps {

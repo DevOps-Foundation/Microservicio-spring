@@ -34,8 +34,8 @@ pipeline {
           }
         stage('Build') {
             steps {
-                chmod 777 gradlew
-                ./gradlew clean build
+                sh 'chmod 777 gradlew'
+                sh './gradlew clean build'
                 archiveArtifacts artifacts: "build/libs/testing-web-*.jar"
             }
           }

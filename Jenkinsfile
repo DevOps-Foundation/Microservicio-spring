@@ -31,10 +31,12 @@ pipeline {
                 checkout scm 
                 //checkout([$class: 'GitSCM', branches: [[name: '*/feature-deploy']], extensions: [], userRemoteConfigs: [[credentialsId: 'clagosu', url: 'https://github.com/Devops-Foundation/microservicio-spring.git']]])
             }
+          }
         stage('Build') {
             steps {
                 echo 'Hello world!' 
             }
+          }
         stage('Image Build') {
             steps {
                 echo 'Hello world!' 

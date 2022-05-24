@@ -22,7 +22,13 @@ pipeline {
         }
         stage('Image Build') {
             steps {
-                sh 'docker build Dockerfile'
+                withDockerRegistry(credentialsId: 'clagosu', url: 'https://hub.docker.com/r/clagosu') {
+                    sh 'docker build .'
+                }
+                script {
+                    def customImage = docker.build("my-image:${env.BUILD_ID}")
+                    customImage.push()
+                }
             }
         }
     }

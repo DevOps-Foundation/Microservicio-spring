@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Image Build') {
             steps {
-                withDockerRegistry(credentialsId: 'clagosu', url: 'https://hub.docker.com/r/clagosu') {
+                withDockerRegistry(credentialsId: 'docker', url: 'https://hub.docker.com/clagosu') {
                     sh 'docker build .'
                 }
                 script {

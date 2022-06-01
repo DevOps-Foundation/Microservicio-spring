@@ -9,6 +9,18 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - script: |
-      echo hola   
-    displayName:  Loop
+    - script: |
+        az login
+      name: seteo     
+      displayName:  Loop
+
+
+  #- task: UniversalPackages@0
+  #  inputs:
+  #    command: 'publish'
+  #    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+  #    feedsToUsePublish: 'internal'
+  #    vstsFeedPublish: 'ae96b73e-3d80-4650-9e1c-b091181c0826'
+  #    vstsFeedPackagePublish: 'sas'
+  #    versionOption: 'patch'
+  #    versionPublish: '1'

@@ -34,3 +34,8 @@ steps:
       repository: 'cristobalfajardo/devops-cristobal'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'  
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'Sonar'
+      organization: 'cfg-devops-usach'
+      scannerMode: 'Other'

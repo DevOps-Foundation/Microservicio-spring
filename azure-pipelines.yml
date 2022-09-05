@@ -22,10 +22,6 @@ steps:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
   
-  - task: SonarCloudPublish@1
-    inputs:
-      pollingTimeoutSec: '300'
-    displayName: 'Publish Analysis Results'
 
   - task: Docker@2
     displayName: Docker login

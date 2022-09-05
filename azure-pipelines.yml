@@ -22,6 +22,11 @@ steps:
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'Sonar'
+      organization: 'cfg-devops-usach'
+      scannerMode: 'Other'
   - task: Docker@2
     displayName: Docker login
     inputs:
@@ -34,8 +39,3 @@ steps:
       repository: 'cristobalfajardo/devops-cristobal'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'  
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'Sonar'
-      organization: 'cfg-devops-usach'
-      scannerMode: 'Other'

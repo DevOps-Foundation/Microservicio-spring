@@ -48,7 +48,7 @@ steps:
     displayName: 'Code Review'
     inputs:
       SonarCloud: 'SonarCloud'
-      organization: 'cristobalfajardogarrido'
+      organization: 'cfg-devops-usach'
       scannerMode: 'Other'
       extraProperties: |
         sonar.coverage.jacoco.xmlReportPaths=$(Pipeline.Workspace)/appJar/build/reports/jacoco/test/jacocoTestReport.xml

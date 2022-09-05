@@ -44,3 +44,11 @@ steps:
       downloadType: 'single'
       artifactName: 'appJar'
       downloadPath: '$(Pipeline.Workspace)'
+  - task: SonarCloudPrepare@1
+    displayName: 'Code Review'
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'cristobalfajardogarrido'
+      scannerMode: 'Other'
+      extraProperties: |
+        sonar.coverage.jacoco.xmlReportPaths=$(Pipeline.Workspace)/appJar/build/reports/jacoco/test/jacocoTestReport.xml

@@ -22,33 +22,20 @@ steps:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
   
-  - task: CopyFiles@2
-    displayName: Copia archivos
+  - task: SonarCloudPublish@1
     inputs:
-      sourceFolder: '$(Build.SourcesDirectory)'
-      contents: |
-          **/build/libs/*.jar
-          **/build/**/*.xml
-      targetFolder: '$(Build.ArtifactStagingDirectory)'
+      pollingTimeoutSec: '300'
+    displayName: 'Publish Analysis Results'
 
-  - task: PublishBuildArtifacts@1
-    displayName: Publica artefactos
+  - task: Docker@2
+    displayName: Docker login
     inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: appJar
-      publishLocation: 'Container'
-  - task: DownloadBuildArtifacts@0
-    displayName: Descarga Jar
+      containerRegistry: 'Docker'
+      command: 'login'
+    
+  - task: Docker@2
     inputs:
-      buildType: 'current'
-      downloadType: 'single'
-      artifactName: 'appJar'
-      downloadPath: '$(Pipeline.Workspace)'
-  - task: SonarCloudPrepare@1
-    displayName: 'Code Review'
-    inputs:
-      SonarCloud: 'SonarCloud'
-      organization: 'CFG-DevOps-Usach'
-      scannerMode: 'Other'
-      extraProperties: |
-        sonar.coverage.jacoco.xmlReportPaths=$(Pipeline.Workspace)/appJar/build/reports/jacoco/test/jacocoTestReport.xml
+      containerRegistry: 'Docker'
+      repository: 'cristobalfajardo/devops-cristobal'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'  

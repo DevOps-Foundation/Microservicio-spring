@@ -48,3 +48,25 @@ steps:
       sqGradlePluginVersionChoice: 'specify'
       sonarQubeGradlePluginVersion: '3.3'
     displayName: 'Analyze current Branch'
+  - task: CopyFiles@2
+    displayName: Copia archivos
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: |
+          **/build/libs/*.jar
+          **/build/**/*.xml
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publica artefactos
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: appJar
+      publishLocation: 'Container'
+  - task: DownloadBuildArtifacts@0
+    displayName: Descarga Jar
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appJar'
+      downloadPath: '$(Pipeline.Workspace)'

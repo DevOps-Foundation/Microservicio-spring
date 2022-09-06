@@ -39,3 +39,12 @@ steps:
       repository: 'cristobalfajardo/devops-cristobal'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'  
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: "build jacocoTestReport"
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: false
+      sqGradlePluginVersionChoice: 'specify'
+      sonarQubeGradlePluginVersion: '3.3'
+    displayName: 'Analyze current Branch'
